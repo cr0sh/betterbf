@@ -100,8 +100,10 @@ func compileOp(op string, stoks *stokens) (c string) {
 	case "_snd":
 		n := stoks.getint()
 		m := stoks.getint()
-		c += pset(n) + "[" + pset(m) + "+" + "<[<<]>" + strings.Repeat(">>", 6) + "+" + pset(n) + "-]"       // move n to r7/m
-		c += "<[<<]>" + strings.Repeat(">>", 6) + "[" + pset(n) + "+<[<<]>" + strings.Repeat(">>", 6) + "-]" // move r7 to n back
+		c += psetr(10) + "[-]" // clear r10
+		c += pset(n) + "[-" + pset(m) + "+" +
+			psetr(10) + "+" + pset(n) + "]" // #M += #N, r10 += #N, #N=0
+		c += psetr(10) + "[-" + pset(n) + "+" + psetr(10) + "]"
 		c += pset(m)
 	case "_chr":
 		n := stoks.getint()
@@ -113,8 +115,7 @@ func compileOp(op string, stoks *stokens) (c string) {
 		c += pset(n)
 		c += "["
 	case "_endif":
-		c += prst
-		c += "]>"
+		c += psetr(10) + "[-]]"
 	case "_loop":
 		n := stoks.getint()
 		c += pset(n)

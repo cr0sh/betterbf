@@ -1,7 +1,6 @@
 routine 1
-	_trace
-	_set 1 3
-	_set 2 4
+	_set 1 9
+	_set 2 8
 	_loop 1
 		_sub 1 1
 		_snd 2 3 /** #1 x #2 = #3 **/
@@ -23,10 +22,12 @@ routine 2 /** prints decimal **/
 			_endif
 			_if 6
 				_set 7 0
+				_set 5 0 /** break **/
 			_endif
 		_end 5
 		_add 8 1 /** #8: 십의 자리 수 **/
 	_end 7
+	_sub 8 1
 	_snd 8 9
 	_loop 9
 		_sub 9 1
