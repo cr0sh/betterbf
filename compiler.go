@@ -9,11 +9,12 @@ import (
 
 // Compile compiles the given code.
 func Compile(code string) (string, error) {
+	code = comment.ReplaceAllString(code, "")
 	// one-sled boilerplate
 	// 1 exit-call + 1 routineid
 	ret := strings.Repeat(">>+", 16-1) + ">" + "\n" +
 		strings.Repeat("+", 64) + "\n" +
-		"[[->>+<<]>+>-]<[<<]>+>>+<<[\nloop started\n"
+		"[[->>+<<]>++>-]<[<<]>+>>+<<[\nloop started\n"
 	strtokens := regexp.MustCompile(`\s+`).Split(code, -1)
 	stoks := &stokens{tslice: strtokens, off: 0}
 	for stoks.off < uint(len(stoks.tslice)) {
@@ -30,8 +31,8 @@ func Compile(code string) (string, error) {
 			rtoks := &stokens{tslice: stoks.slice_until("endroutine"), off: 0}
 			stoks.off++
 			ret += fmt.Sprintf("routine %d selector\n", snum)
-			ret += ">>>>+<<" + strings.Repeat("-", snum) + "[>>-]<[<<]>>>" +
-				strings.Repeat("+", snum) + ">>[[-]" + strings.Repeat(">", 27) +
+			ret += "<[<<]>>>>>+<<" + strings.Repeat("-", snum) + "[>>-]<[<<]>>>" +
+				strings.Repeat("+", snum) + ">>[[-]" +
 				fmt.Sprintf("\nroutine %d code start\n", snum)
 			for rtoks.off < uint(len(rtoks.tslice)) {
 				offbefore := rtoks.off
@@ -47,7 +48,7 @@ func Compile(code string) (string, error) {
 			ret += fmt.Sprintf("<[<<]>>>>>]\nroutine %d selector end\n", snum)
 		}
 	}
-	ret += "end phase(exit-call check)\n<[<<]>]\n"
+	ret += "end phase(exit_call check)\n<[<<]>]\n"
 	return ret, nil
 }
 
@@ -69,6 +70,8 @@ func compileOp(op string, stoks *stokens) (c string) {
 		c += "["
 	case "end":
 		c += "]"
+	case "_trace":
+		c += "!"
 	case "_add":
 		n := stoks.getint()
 		m := stoks.getint()
@@ -110,18 +113,28 @@ func compileOp(op string, stoks *stokens) (c string) {
 		c += pset(n)
 		c += "["
 	case "_endif":
+		c += prst
+		c += "]>"
+	case "_loop":
+		n := stoks.getint()
+		c += pset(n)
+		c += "["
+	case "_end":
 		n := stoks.getint()
 		c += pset(n)
 		c += "]"
 	case "_exit":
-		c += "<[<<]>[-]"
+		c += "<[<<]>[-]>>[-]"
 	case "_goto":
 		n := stoks.getint()
 		c += "<[<<]>>>[-]"
 		c += strings.Repeat("+", n)
-
 	default:
 		panic("undefined operation: " + op)
 	}
 	return
+}
+
+func compileByArgs(op string, args ...string) string {
+	return compileOp(op, &stokens{tslice: args})
 }

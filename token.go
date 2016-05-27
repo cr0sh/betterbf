@@ -20,7 +20,6 @@ scn
 _set
 _pset
 _if
-_else
 _endif
 _goto
 _exit
