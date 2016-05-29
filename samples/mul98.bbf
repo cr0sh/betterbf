@@ -1,42 +1,42 @@
 routine 1
-	_set 1 9
-	_set 2 8
-	_loop 1
-		_sub 1 1
-		_snd 2 3 /** #1 x #2 = #3 **/
-	_end 1
-	_goto 2
+	set 1 9
+	set 2 8
+	loop 1
+		sub 1 1
+		snd 2 3 /** #1 x #2 = #3 **/
+	end 1
+	goto 2
 endroutine
 
 routine 2 /** prints decimal **/
-	_snd 3 4
-	_set 7 1
-	_loop 4
-		_set 5 10
-		_loop 5
-			_sub 5 1
-			_sub 4 1
-			_set 6 1 /** else NOT **/
-			_if 4
-				_set 6 0
-			_endif
-			_if 6
-				_set 7 0
-				_set 5 0 /** break **/
-			_endif
-		_end 5
-		_add 8 1 /** #8: 십의 자리 수 **/
-	_end 7
-	_sub 8 1
-	_snd 8 9
-	_loop 9
-		_sub 9 1
-		_sub 3 10 /** #3: 일의 자리 수 **/
-	_end 9
-	_chr 11 0
-	_snd 11 3
-	_snd 11 8
-	_prt 8
-	_prt 3
-	_exit
+	snd 3 4
+	set 7 1
+	loop 4
+		set 5 10
+		loop 5
+			sub 5 1
+			sub 4 1
+			set 6 1 /** else NOT **/
+			if 4
+				set 6 0
+			endif
+			if 6
+				set 7 0
+				set 5 0 /** break **/
+			endif
+		end 5
+		add 8 1 /** #8: 십의 자리 수 **/
+	end 7
+	sub 8 1
+	snd 8 9
+	loop 9
+		sub 9 1
+		sub 3 10 /** #3: 일의 자리 수 **/
+	end 9
+	chr 11 0
+	snd 11 3
+	snd 11 8
+	prt 8
+	prt 3
+	exit
 endroutine

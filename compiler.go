@@ -54,50 +54,50 @@ func Compile(code string) (string, error) {
 
 func compileOp(op string, stoks *stokens) (c string) {
 	switch op {
-	case "add":
+	case "_add":
 		n := stoks.getint()
 		c += strings.Repeat("+", n)
-	case "sub":
+	case "_sub":
 		n := stoks.getint()
 		c += strings.Repeat("-", n)
-	case "padd":
+	case "_padd":
 		n := stoks.getint()
 		c += strings.Repeat(">", n)
-	case "psub":
+	case "_psub":
 		n := stoks.getint()
 		c += strings.Repeat("<", n)
-	case "loop":
+	case "_loop":
 		c += "["
-	case "end":
+	case "_end":
 		c += "]"
-	case "_trace":
+	case "trace":
 		c += "!"
-	case "_add":
+	case "add":
 		n := stoks.getint()
 		m := stoks.getint()
 		c += pset(n)
 		c += strings.Repeat("+", m)
-	case "_sub":
+	case "sub":
 		n := stoks.getint()
 		m := stoks.getint()
 		c += pset(n)
 		c += strings.Repeat("-", m)
-	case "_prt":
+	case "prt":
 		n := stoks.getint()
 		c += pset(n) + "."
-	case "_scn":
+	case "scn":
 		n := stoks.getint()
 		c += pset(n) + ","
-	case "_set":
+	case "set":
 		n := stoks.getint()
 		m := stoks.getint()
 		c += pset(n)
 		c += "[-]"
 		c += strings.Repeat("+", m)
-	case "_pset":
+	case "pset":
 		n := stoks.getint()
 		c += pset(n)
-	case "_snd":
+	case "snd":
 		n := stoks.getint()
 		m := stoks.getint()
 		c += psetr(10) + "[-]" // clear r10
@@ -105,28 +105,28 @@ func compileOp(op string, stoks *stokens) (c string) {
 			psetr(10) + "+" + pset(n) + "]" // #M += #N, r10 += #N, #N=0
 		c += psetr(10) + "[-" + pset(n) + "+" + psetr(10) + "]"
 		c += pset(m)
-	case "_chr":
+	case "chr":
 		n := stoks.getint()
 		m := stoks.get()[0]
 		c += pset(n)
 		c += "[-]" + strings.Repeat("+", int(m))
-	case "_if":
+	case "if":
 		n := stoks.getint()
 		c += pset(n)
 		c += "["
-	case "_endif":
+	case "endif":
 		c += psetr(10) + "[-]]"
-	case "_loop":
+	case "loop":
 		n := stoks.getint()
 		c += pset(n)
 		c += "["
-	case "_end":
+	case "end":
 		n := stoks.getint()
 		c += pset(n)
 		c += "]"
-	case "_exit":
+	case "exit":
 		c += "<[<<]>[-]>>[-]"
-	case "_goto":
+	case "goto":
 		n := stoks.getint()
 		c += "<[<<]>>>[-]"
 		c += strings.Repeat("+", n)

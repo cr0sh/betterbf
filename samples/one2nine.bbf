@@ -1,20 +1,20 @@
 routine 1 /** entry point **/
-_chr 1 0 /** chracter constant **/
-_goto 2 /** anyway this is a comment **/
+chr 1 0 /** chracter constant **/
+goto 2 /** anyway this is a comment **/
 endroutine
 
 routine 2
-_add 2 1
-_add 3 1
-_loop 3 /** loop start **/
-_set 4 0
-_snd 2 4 /** copy value **/
-_snd 1 4 /** add character 0 **/
-_prt 4 /** print **/
-_add 2 1
-_set 3 0
-_snd 2 3
-_sub 3 10
-_end 3 /** loop end **/
-_exit
+add 2 1
+add 3 1
+loop 3 /** loop start **/
+set 4 0
+snd 2 4 /** copy value **/
+snd 1 4 /** add character 0 **/
+prt 4 /** print **/
+add 2 1
+set 3 0
+snd 2 3
+sub 3 10
+end 3 /** loop end **/
+exit
 endroutine

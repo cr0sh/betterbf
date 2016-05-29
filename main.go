@@ -11,7 +11,7 @@ import (
 	"github.com/cr0sh/betterbf"
 )
 
-const usage = `BetterBF compiler v1.0
+const usage = `BetterBF compiler v1.1
 usage: %s <filename>
 `
 
