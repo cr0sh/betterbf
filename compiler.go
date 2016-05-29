@@ -39,9 +39,7 @@ func Compile(code string) (string, error) {
 				c := compileOp(rtoks.get(), rtoks)
 				offafter := rtoks.off
 				debug := ""
-				for _, st := range rtoks.tslice[offbefore:offafter] {
-					debug += st + " "
-				}
+				debug += strings.Join(rtoks.tslice[offbefore:offafter], " ")
 				ret += debug + c + "\n"
 			}
 			ret += fmt.Sprintf("routine %d code end\n", snum)
